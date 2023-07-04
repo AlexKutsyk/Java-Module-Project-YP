@@ -2,7 +2,6 @@ public class Calculate {
     String name;
     double cost;
 
-
     Calculate (String nameProduct, double costProduct) {
         name = nameProduct;
         cost = costProduct;
