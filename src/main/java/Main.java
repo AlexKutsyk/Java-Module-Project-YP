@@ -69,7 +69,7 @@ public class Main {
         if ((strPayment.length() > 1) && ((strPayment.substring((strPayment.length() - 2), (strPayment.length()-1))).equals("1"))) {
             System.out.println(String.format("Каждый человек должен заплатить %.2f рублей", paymentPerson));
                 } else {
-            switch (strPayment.substring((strPayment.length() - 1))) {
+            switch (strPayment.substring((strPayment.length() - 1), strPayment.length())) {
                 case "1" ->
                         System.out.println(String.format("Каждый человек должен заплатить %.2f рубль", paymentPerson));
                 case "2", "3", "4" ->
