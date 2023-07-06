@@ -2,41 +2,37 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Calculate order;
-        double sum = 0;
-        String list = "";
-
-        int person = identifyQuantityPerson();
-
         Scanner console = new Scanner(System.in);
-        System.out.println("Введите название товара и его стоимость через пробел. Стоимость должна быть в формате рубли.копейки");
+        double sum = 0;
+        String  list = "";
+        int person = Input.identifyQuantityPerson();
 
         while (true) {
-            order = new Calculate(console.next(), console.nextDouble());
-            if (order.cost > 0) {
-                list = order.compilationList(order.name, list);
-                sum = order.sumCost(order.cost, sum);
-                System.out.println("Спасибо! Товар добавлен успешно");
-                System.out.println("Добавить ещё один товар/ввести любое слово/ или завершить/ввести завершить/?");
-                String requestEnd = console.next();
-                if (requestEnd.equalsIgnoreCase("Завершить")) {
-                    break;
-                } else {
-                    System.out.println("Добавьте следующий товар");
-                }
+            System.out.println("Введите название товара");
+            String name = Input.checkName();
+            System.out.println("Введите его стоимость в формате рубли,копейки");
+            double cost = Input.checkCost();
+            Calculate order = new Calculate(name, cost);
+            System.out.println("Спасибо! Товар добавлен успешно");
+            list += "\n" + order.name;
+            sum += order.cost;
+
+            System.out.println("Добавить ещё один товар (введите любое слово) или завершить ввод (введите \"завершить\")?");
+            if ((console.next()).equalsIgnoreCase("Завершить")) {
+                break;
             } else {
-                System.out.println("Стоимость товара должна быть больше нуля");
+                System.out.println("Добавьте следующий товар");
             }
         }
 
         console.close();
 
-        double paymentPerson = order.calculatePayment(sum, person);
+        double paymentPerson = Calculate.calculatePayment(sum, person);
 
-        outputInfo(paymentPerson, list);
+        Output.reportInfo(paymentPerson, list);
     }
 
-    public static int identifyQuantityPerson() {
+ /*   public static int identifyQuantityPerson() {
         Scanner console = new Scanner(System.in);
         System.out.println("На скольких человек необходимо разделить счёт?");
         int quantityPerson;
@@ -63,6 +59,40 @@ public class Main {
         return quantityPerson;
     }
 
+    public static String inputName() {
+        Scanner console = new Scanner(System.in);
+        String line;
+        while (true) {
+            if (console.hasNextLine()) {
+                line = console.next();
+                break;
+            } else {
+                System.out.println("Убедитесь, что вводите название текстом");
+                console.next();
+            }
+        }
+        return line;
+    }
+
+    public static double inputCost() {
+        Scanner console = new Scanner(System.in);
+        double line;
+        while (true) {
+            if (console.hasNextDouble()) {
+                line = console.nextDouble();
+                if (line > 0) {
+                    break;
+                } else {
+                    System.out.println("Стоимость товара должна быть больше нуля");
+                }
+            } else {
+                System.out.println("Убедитесь, что вводите дробное число");
+                console.next();
+            }
+        }
+        return line;
+    }
+
     public static void outputInfo(double paymentPerson, String list) {
         System.out.println(String.format("Добавленные товары:%s", list));
         String strPayment = String.format("%.0f", Math.floor(paymentPerson));
@@ -74,9 +104,9 @@ public class Main {
                         System.out.println(String.format("Каждый человек должен заплатить %.2f рубль", paymentPerson));
                 case "2", "3", "4" ->
                         System.out.println(String.format("Каждый человек должен заплатить %.2f рубля", paymentPerson));
-                case "5", "6", "7", "8", "9", "0" ->
+                default ->
                         System.out.println(String.format("Каждый человек должен заплатить %.2f рублей", paymentPerson));
             }
         }
-    }
+    }*/
 }
